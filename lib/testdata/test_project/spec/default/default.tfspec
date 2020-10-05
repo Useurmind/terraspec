@@ -1,5 +1,12 @@
+terraspec {
+    workspace = "myenv"
+}
+
 mock "aws_vpc" "vpc" {
   id = "vpc-id"
+  tags = {
+      env = terraspec.workspace
+  }
   return {
     arn = "arb"
   }
@@ -13,6 +20,6 @@ mock "cloudfoundry_org" "org" {
 }
 
 assert "cloudfoundry_space" "space" {
-  name = "my-space"
+  name = "my-space-${terraspec.workspace}"
   org = "org-id"
 }

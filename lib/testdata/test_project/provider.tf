@@ -20,6 +20,9 @@ provider "aws" {
 
 data "aws_vpc" "vpc" {
   id = "vpc-id"
+  tags = {
+      env = terraform.workspace
+  }
 }
 
 
@@ -28,6 +31,6 @@ data "cloudfoundry_org" "org" {
 }
 
 resource "cloudfoundry_space" "space" {
-    name = "my-space"
+    name = "my-space-${terraform.workspace}"
     org = data.cloudfoundry_org.org.id
 }
